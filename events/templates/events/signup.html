@@ -1,0 +1,362 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Signup | College Events</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #101b36, #245bc2, #72a7ff);
+            color: #1e293b;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            padding: 20px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+        }
+
+        .navbar h2 {
+            font-size: 22px;
+        }
+
+        .home-btn {
+            text-decoration: none;
+            color: white;
+            border: 1px solid #ffffff70;
+            padding: 10px 18px;
+            border-radius: 9px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .home-btn:hover {
+            background: #ffffff20;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 35px 18px;
+        }
+
+        .signup-wrapper {
+            width: 100%;
+            max-width: 1000px;
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            background: white;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 25px 70px #07152e50;
+        }
+
+        .welcome-panel {
+            background: linear-gradient(145deg, #193c80, #3479e8);
+            color: white;
+            padding: 45px 34px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .illustration {
+            font-size: 64px;
+            margin-bottom: 25px;
+        }
+
+        .welcome-panel h1 {
+            font-size: 31px;
+            line-height: 1.3;
+            margin-bottom: 16px;
+        }
+
+        .welcome-panel p {
+            color: #e0ebff;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .benefits {
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid #ffffff40;
+            color: #edf4ff;
+            font-size: 13px;
+            line-height: 2.2;
+        }
+
+        .form-panel {
+            padding: 38px 38px;
+        }
+
+        .form-icon {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf1ff;
+            border-radius: 15px;
+            font-size: 26px;
+            margin-bottom: 18px;
+        }
+
+        .form-panel h2 {
+            font-size: 27px;
+            color: #172b52;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #7b879b;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 23px;
+        }
+
+        .error-message {
+            background: #fff0f0;
+            color: #b42318;
+            padding: 12px;
+            border-radius: 9px;
+            font-size: 12px;
+            margin-bottom: 16px;
+            overflow-wrap: anywhere;
+        }
+
+        .form-field {
+            margin-bottom: 16px;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #34415b;
+            margin-bottom: 7px;
+        }
+
+        .form-field input {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid #dce3ef;
+            border-radius: 9px;
+            outline: none;
+            background: #fbfcff;
+            font-size: 14px;
+            color: #1e293b;
+        }
+
+        .form-field input:focus {
+            border-color: #3479e8;
+            box-shadow: 0 0 0 3px #3479e81c;
+        }
+
+        .form-field small,
+        .form-field .helptext {
+            display: block;
+            color: #7b879b;
+            font-size: 11px;
+            line-height: 1.6;
+            margin-top: 6px;
+            overflow-wrap: anywhere;
+        }
+
+        .form-field ul {
+            list-style: none;
+            color: #b42318;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        .signup-btn {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(100deg, #245bc2, #3479e8);
+            color: white;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: 0.2s;
+        }
+
+        .signup-btn:hover {
+            filter: brightness(0.93);
+            transform: translateY(-1px);
+        }
+
+        .form-footer {
+            margin-top: 23px;
+            text-align: center;
+            color: #778399;
+            font-size: 13px;
+            line-height: 2;
+        }
+
+        .form-footer a {
+            color: #245bc2;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+            color: #e0ebff;
+            font-size: 12px;
+            line-height: 1.8;
+            padding: 18px;
+        }
+
+        @media (max-width: 760px) {
+            .navbar {
+                padding: 18px;
+            }
+
+            .navbar h2 {
+                font-size: 18px;
+            }
+
+            .signup-wrapper {
+                grid-template-columns: 1fr;
+                max-width: 460px;
+            }
+
+            .welcome-panel {
+                padding: 26px;
+            }
+
+            .illustration {
+                font-size: 42px;
+                margin-bottom: 12px;
+            }
+
+            .welcome-panel h1 {
+                font-size: 25px;
+            }
+
+            .benefits {
+                margin-top: 15px;
+                padding-top: 12px;
+            }
+
+            .form-panel {
+                padding: 28px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <h2>🎓 College Events</h2>
+        <a href="{% url 'home' %}" class="home-btn">← Home</a>
+    </nav>
+
+    <main class="main-content">
+        <div class="signup-wrapper">
+
+            <section class="welcome-panel">
+                <div class="illustration">🎓</div>
+
+                <h1>Join Your Campus Community!</h1>
+
+                <p>
+                    Create your student account to discover college events,
+                    register for activities, and make memorable experiences.
+                </p>
+
+                <div class="benefits">
+                    ✨ Explore college events<br>
+                    📅 Manage your registrations<br>
+                    🎉 Be part of campus life
+                </div>
+            </section>
+
+            <section class="form-panel">
+                <div class="form-icon">👨‍🎓</div>
+
+                <h2>Create Account</h2>
+
+                <p class="subtitle">
+                    Fill in your details to get started.
+                </p>
+
+                <form method="POST" class="signup-form">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="error-message">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    {% for field in form %}
+                        <div class="form-field">
+
+                            {{ field.label_tag }}
+
+                            {{ field }}
+
+                            {% if field.errors %}
+                                <div class="error-message">
+                                    {{ field.errors }}
+                                </div>
+                            {% endif %}
+
+                            {% if field.help_text %}
+                                <small>{{ field.help_text|safe }}</small>
+                            {% endif %}
+
+                        </div>
+                    {% endfor %}
+
+                    <button type="submit" class="signup-btn">
+                        Create My Account →
+                    </button>
+                </form>
+
+                <div class="form-footer">
+                    Already have an account?
+                    <a href="{% url 'login' %}">Login here</a>
+
+                    <p>
+                        <a href="{% url 'home' %}">← Back to Home</a>
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        © 2026 College Event Management System<br>
+        Your campus, your experiences!
+    </footer>
+
+</body>
+</html>

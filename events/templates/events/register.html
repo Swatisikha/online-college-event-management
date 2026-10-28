@@ -1,0 +1,82 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Event Registration | College Events</title>
+
+    <link rel="stylesheet" href="{% static 'events/style.css' %}">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <h2>🎓 College Events</h2>
+
+        <a href="{% url 'home' %}" class="register-btn">
+            Home
+        </a>
+    </nav>
+
+    <!-- Registration Content -->
+    <div class="container registration-container">
+
+        <div class="registration-card">
+
+            <div class="registration-header">
+                <div class="registration-icon">📝</div>
+
+                <h1>Event Registration</h1>
+
+                <p>You're one step away from joining the event!</p>
+            </div>
+
+            <!-- Selected Event Details -->
+            <div class="selected-event">
+
+                <h2>{{ event.title }}</h2>
+
+                <p>
+                    <strong>📅 Date:</strong>
+                    {{ event.date }}
+                </p>
+
+                <p>
+                    <strong>📍 Venue:</strong>
+                    {{ event.venue }}
+                </p>
+
+                <p>{{ event.description }}</p>
+
+            </div>
+
+            <!-- Registration Form -->
+            <form method="POST" class="registration-form">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button type="submit" class="register-btn submit-btn">
+                    Confirm Registration
+                </button>
+            </form>
+
+            <div class="registration-footer">
+                <a href="{% url 'home' %}">← Back to All Events</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 College Event Management System</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,332 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login | College Events</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #101b36, #245bc2, #72a7ff);
+            color: #1e293b;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            padding: 20px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+        }
+
+        .navbar h2 {
+            font-size: 22px;
+        }
+
+        .home-btn {
+            text-decoration: none;
+            color: white;
+            border: 1px solid #ffffff70;
+            padding: 10px 18px;
+            border-radius: 9px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .home-btn:hover {
+            background: #ffffff20;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 35px 18px;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 960px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: white;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 25px 70px #07152e50;
+        }
+
+        .welcome-panel {
+            background: linear-gradient(145deg, #193c80, #3479e8);
+            color: white;
+            padding: 48px 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .illustration {
+            font-size: 65px;
+            margin-bottom: 25px;
+        }
+
+        .welcome-panel h1 {
+            font-size: 32px;
+            line-height: 1.25;
+            margin-bottom: 17px;
+        }
+
+        .welcome-panel p {
+            color: #e0ebff;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .welcome-note {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #ffffff40;
+            font-size: 13px;
+            color: #dce8ff;
+        }
+
+        .form-panel {
+            padding: 45px 38px;
+        }
+
+        .form-icon {
+            width: 54px;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf1ff;
+            border-radius: 15px;
+            font-size: 27px;
+            margin-bottom: 22px;
+        }
+
+        .form-panel h2 {
+            font-size: 27px;
+            margin-bottom: 9px;
+            color: #172b52;
+        }
+
+        .subtitle {
+            color: #7b879b;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .error-message {
+            background: #fff0f0;
+            color: #b42318;
+            padding: 12px;
+            border-radius: 9px;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        .login-form p {
+            margin-bottom: 17px;
+        }
+
+        .login-form label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #34415b;
+            margin-bottom: 8px;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #dce3ef;
+            border-radius: 9px;
+            outline: none;
+            background: #fbfcff;
+            font-size: 14px;
+            color: #1e293b;
+        }
+
+        .login-form input:focus {
+            border-color: #3479e8;
+            box-shadow: 0 0 0 3px #3479e81c;
+        }
+
+        .login-form .helptext {
+            display: block;
+            margin-top: 6px;
+            font-size: 12px;
+            color: #7b879b;
+        }
+
+        .login-form ul.errorlist {
+            list-style: none;
+            color: #b42318;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .login-btn {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(100deg, #245bc2, #3479e8);
+            color: white;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: 0.2s;
+        }
+
+        .login-btn:hover {
+            filter: brightness(0.93);
+            transform: translateY(-1px);
+        }
+
+        .signup-text {
+            margin-top: 24px;
+            text-align: center;
+            color: #778399;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .signup-text a {
+            color: #245bc2;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .signup-text a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+            color: #e0ebff;
+            font-size: 12px;
+            line-height: 1.8;
+            padding: 18px;
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 18px;
+            }
+
+            .navbar h2 {
+                font-size: 18px;
+            }
+
+            .login-wrapper {
+                grid-template-columns: 1fr;
+                max-width: 430px;
+            }
+
+            .welcome-panel {
+                padding: 28px;
+            }
+
+            .illustration {
+                font-size: 42px;
+                margin-bottom: 12px;
+            }
+
+            .welcome-panel h1 {
+                font-size: 25px;
+            }
+
+            .welcome-note {
+                margin-top: 18px;
+                padding-top: 12px;
+            }
+
+            .form-panel {
+                padding: 30px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <h2>🎓 College Events</h2>
+        <a href="{% url 'home' %}" class="home-btn">← Home</a>
+    </nav>
+
+    <main class="main-content">
+        <div class="login-wrapper">
+
+            <section class="welcome-panel">
+                <div class="illustration">🎉</div>
+                <h1>Your Campus.<br>Your Events.</h1>
+                <p>
+                    Discover exciting college events, connect with your
+                    campus community, and keep all your registrations
+                    organized in one place.
+                </p>
+                <div class="welcome-note">
+                    ✨ Every event is a new experience.
+                </div>
+            </section>
+
+            <section class="form-panel">
+                <div class="form-icon">🔐</div>
+                <h2>Welcome Back!</h2>
+                <p class="subtitle">
+                    Sign in to continue to your student account.
+                </p>
+
+                {% if form.errors %}
+                    <div class="error-message">
+                        Invalid username or password. Please try again.
+                    </div>
+                {% endif %}
+
+                <form method="POST" class="login-form">
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+                    <button type="submit" class="login-btn">
+                        Login to Your Account →
+                    </button>
+                </form>
+
+                <div class="signup-text">
+                    Don't have an account?
+                    <a href="{% url 'signup' %}">Create an account</a>
+                    <p>
+                        <a href="{% url 'home' %}">← Back to Home</a>
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        © 2026 College Event Management System<br>
+        Your campus, your experiences!
+    </footer>
+
+</body>
+</html>

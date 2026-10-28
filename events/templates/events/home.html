@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Event Management System</title>
+    <link rel="stylesheet" href="{% static 'events/style.css' %}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <h2>🎓 College Events</h2>
+
+        <div class="nav-links">
+            {% if user.is_authenticated %}
+                <span>Welcome, {{ user.username }}!</span>
+                <a href="{% url 'my_registrations' %}" class="register-btn">
+                    My Registrations
+                </a>
+                <form method="POST" action="{% url 'logout' %}" class="logout-form">
+                    {% csrf_token %}
+                    <button type="submit" class="register-btn">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="register-btn">Login</a>
+                <a href="{% url 'signup' %}" class="register-btn">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main class="container">
+
+        {% if messages %}
+            {% for message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <section class="hero-section">
+            <p class="hero-label">YOUR CAMPUS, YOUR EXPERIENCES</p>
+            <h1>Discover Amazing College Events</h1>
+            <p class="hero-description">
+                Explore exciting events, showcase your talents,
+                connect with fellow students, and make your college
+                journey unforgettable.
+            </p>
+            <a href="#upcoming-events" class="register-btn hero-btn">
+                Explore Events ↓
+            </a>
+        </section>
+
+        <section id="upcoming-events" class="events-section">
+            <h2>Explore College Events</h2>
+            <p class="section-description">
+                Discover events, explore your interests, and participate!
+            </p>
+
+            <div class="events-grid">
+                {% for event in events %}
+                    <article class="event-card">
+                        <div class="event-icon">🎉</div>
+
+                        <h3>{{ event.title }}</h3>
+
+                        <p class="event-description">
+                            {{ event.description }}
+                        </p>
+
+                        <div class="event-details">
+                            <p>
+                                <strong>📅 Date:</strong>
+                                {{ event.date|date:"d M Y" }}
+                            </p>
+
+                            <p>
+                                <strong>📍 Venue:</strong>
+                                {{ event.venue }}
+                            </p>
+
+                            <p>
+                                <strong>Registration Deadline:</strong>
+                                {% if event.registration_deadline %}
+                                    {{ event.registration_deadline|date:"d M Y" }}
+                                {% else %}
+                                    Not specified
+                                {% endif %}
+                            </p>
+
+                            <p>
+                                <strong>Participants:</strong>
+                                {{ event.registration_set.count }}
+                                {% if event.max_participants %}
+                                    / {{ event.max_participants }}
+                                {% else %}
+                                    / Unlimited
+                                {% endif %}
+                            </p>
+                        </div>
+
+                        <a href="{% url 'register_event' event.id %}"
+                           class="register-btn">
+                            Register Now →
+                        </a>
+                    </article>
+
+                {% empty %}
+                    <div class="empty-message">
+                        <h3>No Events Available</h3>
+                        <p>Please check again later for upcoming college events.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 College Event Management System</p>
+        <p>Made for students, events, and unforgettable memories.</p>
+    </footer>
+
+</body>
+</html>

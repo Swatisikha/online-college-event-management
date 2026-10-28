@@ -1,0 +1,442 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Registrations | College Events</title>
+    <link rel="stylesheet" href="{% static 'events/style.css' %}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f3f6fc;
+            color: #17233f;
+        }
+
+        .registrations-page {
+            width: min(1120px, 100%);
+            margin: 0 auto;
+            padding: 42px 24px 60px;
+            min-height: 75vh;
+        }
+
+        .page-heading {
+            text-align: center;
+            margin: 0 auto 28px;
+        }
+
+        .eyebrow {
+            color: #2864d9;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .page-heading h1 {
+            color: #14264b;
+            font-size: clamp(28px, 4vw, 38px);
+            margin: 0 0 12px;
+        }
+
+        .page-heading p {
+            color: #718096;
+            font-size: 15px;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .registration-summary {
+            width: fit-content;
+            max-width: 100%;
+            margin: 0 auto 30px;
+            padding: 13px 20px;
+            background: #eaf1ff;
+            color: #2459bf;
+            border: 1px solid #d6e4ff;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .registration-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        .registration-card {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border: 1px solid #e0e7f2;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 6px 22px rgba(23, 37, 84, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .registration-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(23, 37, 84, 0.11);
+        }
+
+        .card-top {
+            padding: 23px 24px;
+            background: linear-gradient(135deg, #edf3ff, #f9fbff);
+            border-bottom: 1px solid #e7edf8;
+        }
+
+        .event-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .event-icon-box {
+            width: 46px;
+            height: 46px;
+            flex: 0 0 46px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 13px;
+            background: #fff;
+            font-size: 23px;
+            box-shadow: 0 3px 10px rgba(23, 37, 84, 0.07);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            border-radius: 20px;
+            padding: 7px 11px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .registration-card h2 {
+            color: #1d4ed8;
+            font-size: 21px;
+            line-height: 1.45;
+            overflow-wrap: anywhere;
+            margin: 0 0 10px;
+        }
+
+        .event-description {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+            white-space: pre-line;
+            margin: 0;
+        }
+
+        .event-description.empty-description {
+            color: #8793a7;
+            font-style: italic;
+        }
+
+        .card-body {
+            flex: 1;
+            padding: 22px 24px 24px;
+        }
+
+        .details-title {
+            font-size: 14px;
+            font-weight: 800;
+            margin: 0 0 10px;
+            color: #263650;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 13px 0;
+            border-bottom: 1px solid #edf0f6;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .detail-icon {
+            width: 36px;
+            height: 36px;
+            flex: 0 0 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f5ff;
+            border-radius: 10px;
+            font-size: 17px;
+        }
+
+        .detail-text {
+            flex: 1;
+            min-width: 0;
+            padding-top: 2px;
+        }
+
+        .detail-label {
+            display: block;
+            color: #8490a5;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            display: block;
+            color: #334155;
+            font-size: 14px;
+            line-height: 1.65;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
+
+        .empty-state {
+            max-width: 620px;
+            margin: 20px auto;
+            padding: 45px 25px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 6px 22px rgba(23, 37, 84, 0.05);
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .empty-state h2 {
+            margin: 0 0 12px;
+            color: #17233f;
+        }
+
+        .empty-state p {
+            color: #718096;
+            line-height: 1.8;
+            margin: 0 0 22px;
+        }
+
+        .page-actions {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .page-btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            padding: 12px 19px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            background: #2864d9;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .page-btn:hover {
+            background: #194db4;
+            transform: translateY(-1px);
+        }
+
+        .page-btn-light {
+            background: #e7efff;
+            color: #2459bf;
+            border-color: #d6e4ff;
+        }
+
+        .page-btn-light:hover {
+            background: #d6e4ff;
+        }
+
+        .registrations-footer {
+            text-align: center;
+            padding: 24px 15px;
+            background: #101b36;
+            color: #cbd5e8;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .registrations-footer p {
+            margin: 3px 0;
+        }
+
+        @media (max-width: 760px) {
+            .registration-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .registrations-page {
+                padding: 32px 16px 45px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-top,
+            .card-body {
+                padding: 18px;
+            }
+
+            .registration-card h2 {
+                font-size: 19px;
+            }
+
+            .event-heading {
+                gap: 10px;
+            }
+
+            .page-actions {
+                flex-direction: column;
+            }
+
+            .page-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <h2>🎓 College Events</h2>
+        <div class="nav-links">
+            <span>Welcome, {{ user.username }}!</span>
+            <a href="{% url 'home' %}" class="register-btn">Explore Events</a>
+        </div>
+    </nav>
+
+    <main class="registrations-page">
+        <header class="page-heading">
+            <div class="eyebrow">YOUR EVENT ACTIVITY</div>
+            <h1>My Registrations</h1>
+            <p>All your registered college events, organized in one place.</p>
+        </header>
+
+        {% if registrations %}
+            <div class="registration-summary">
+                🎟️ You have {{ registrations|length }}
+                registration{{ registrations|length|pluralize }}
+            </div>
+
+            <section class="registration-grid">
+                {% for registration in registrations %}
+                    <article class="registration-card">
+                        <div class="card-top">
+                            <div class="event-heading">
+                                <div class="event-icon-box">🎉</div>
+                                <span class="status-badge">✓ Registered</span>
+                            </div>
+
+                            <h2>{{ registration.event.title }}</h2>
+
+                            {% if registration.event.description %}
+                                <p class="event-description">{{ registration.event.description }}</p>
+                            {% else %}
+                                <p class="event-description empty-description">
+                                    Event description is not available.
+                                </p>
+                            {% endif %}
+                        </div>
+
+                        <div class="card-body">
+                            <h3 class="details-title">Registration Details</h3>
+
+                            <div class="detail-row">
+                                <div class="detail-icon">📅</div>
+                                <div class="detail-text">
+                                    <span class="detail-label">EVENT DATE</span>
+                                    <span class="detail-value">
+                                        {{ registration.event.date|date:"d M Y" }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="detail-row">
+                                <div class="detail-icon">📍</div>
+                                <div class="detail-text">
+                                    <span class="detail-label">VENUE</span>
+                                    <span class="detail-value">
+                                        {{ registration.event.venue|default:"Venue not announced" }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="detail-row">
+                                <div class="detail-icon">👤</div>
+                                <div class="detail-text">
+                                    <span class="detail-label">STUDENT NAME</span>
+                                    <span class="detail-value">
+                                        {{ registration.student_name }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="detail-row">
+                                <div class="detail-icon">✉️</div>
+                                <div class="detail-text">
+                                    <span class="detail-label">EMAIL ADDRESS</span>
+                                    <span class="detail-value">
+                                        {{ registration.email }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </section>
+        {% else %}
+            <section class="empty-state">
+                <div class="empty-icon">📅</div>
+                <h2>No Registrations Yet</h2>
+                <p>
+                    You haven't registered for any college events yet.
+                    Explore the available events and join the activities!
+                </p>
+                <a href="{% url 'home' %}" class="page-btn">Explore Events →</a>
+            </section>
+        {% endif %}
+
+        <div class="page-actions">
+            <a href="{% url 'home' %}" class="page-btn">📅 Browse Events</a>
+            <a href="{% url 'student_dashboard' %}" class="page-btn page-btn-light">
+                🏠 Student Dashboard
+            </a>
+        </div>
+    </main>
+
+    <footer class="registrations-footer">
+        <p>© 2026 Online College Event Management System</p>
+        <p>Making college experiences memorable.</p>
+    </footer>
+</body>
+</html>
